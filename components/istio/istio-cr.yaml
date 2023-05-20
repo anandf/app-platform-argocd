@@ -1,4 +1,3 @@
-
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 spec:
@@ -68,17 +67,17 @@ spec:
   # Global values passed through to helm global.yaml.
   # Please keep this in sync with manifests/charts/global.yaml
   values:
-      multiCluster:
-        enabled: false
-      istioNamespace: istio-system
-      imagePullPolicy: IfNotPresent
-      proxy:
-        readinessFailureThreshold: 90
-      # enable pod disruption budget for the control plane, which is used to ensure Istio control plane
-      # components are gradually upgraded or recovered.
-      # pod disruption budget(pdb) is disabled to allow upgrading worker nodes without violating pdb
-      defaultPodDisruptionBudget:
-        enabled: false
+    multiCluster:
+      enabled: false
+    istioNamespace: istio-system
+    imagePullPolicy: IfNotPresent
+    proxy:
+      readinessFailureThreshold: 90
+    # enable pod disruption budget for the control plane, which is used to ensure Istio control plane
+    # components are gradually upgraded or recovered.
+    # pod disruption budget(pdb) is disabled to allow upgrading worker nodes without violating pdb
+    defaultPodDisruptionBudget:
+      enabled: false
 
     pilot:
       autoscaleEnabled: false
@@ -94,7 +93,7 @@ spec:
     meshConfig:
       enablePrometheusMerge: false
       defaultConfig:
-        proxyMetadata: { }
+        proxyMetadata: {}
 
     sidecarInjectorWebhook:
       rewriteAppHTTPProbe: true
