@@ -1,6 +1,5 @@
-installCRDs=true
+installCRDs: false
 cert-manager:
   namespace: cert-manager
-  
-  startupapicheck:
-    enabled: false
+startupapicheck:
+  enabled: false
