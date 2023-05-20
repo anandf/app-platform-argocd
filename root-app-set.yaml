@@ -8,14 +8,45 @@ spec:
         elements:
           - component: cert-manager
             repoURL: https://charts.jetstack.io
-            targetRevision: "v1.11.2"
+            chartVersion: "v1.11.2"
             chart: cert-manager
             namespace: cert-manager
           - component: istio
             repoURL: https://istio-release.storage.googleapis.com/charts
-            targetRevision: "1.17.2"
+            chartVersion: "1.17.2"
             chart: base
             namespace: istio-system
+          - component: jaeger
+            repoURL: https://jaegertracing.github.io/helm-charts
+            chartVersion: "2.43.0"
+            chart: jaeger-operator
+            namespace: observability
+          - component: opensearch
+            repoURL: https://opensearch-project.github.io/helm-charts
+            chartVersion: "1.20.0"
+            chart: opensearch
+            namespace: observability
+          - component: opensearch-dashboards
+            repoURL: https://opensearch-project.github.io/helm-charts
+            chartVersion: "1.13.0"
+            chart: opensearch-dashboards
+            namespace: observability
+          - component: kiali
+            repoURL: https://kiali.org/helm-charts
+            chartVersion: "1.30.0"
+            chart: kiali-operator
+            namespace: observability
+          - component: prometheus
+            repoURL: https://prometheus-community.github.io/helm-charts
+            chartVersion: "35.0.3"
+            chart: kube-prometheus-stack
+            namespace: observability
+          - component: keycloak
+            repoURL: https://codecentric.github.io/helm-charts
+            chartVersion: "18.4.3"
+            chart: keycloak
+            namespace: security
+
   template:
     metadata:
       name: "{{component}}"
@@ -25,7 +56,7 @@ spec:
       project: default
       sources:
         - repoURL: "{{repoURL}}"
-          targetRevision: "{{targetRevision}}"
+          targetRevision: "{{chartVersion}}"
           helm:
             valueFiles:
               - "$values/components/{{component}}/values.yaml"
