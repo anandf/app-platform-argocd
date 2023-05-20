@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: main
+spec:
+  generators:
+    - list:
+        elements:
+          - component: cert-manager
+            repoURL: https://charts.jetstack.io
+            targetRevision: "v1.11.2"
+            chart: cert-manager
+            namespace: cert-manager
+          - component: istio
+            repoURL: https://istio-release.storage.googleapis.com/charts
+            targetRevision: "1.17.2"
+            chart: base
+            namespace: istio-system
+  template:
+    metadata:
+      name: "{{component}}"
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: ".;.."
+    spec:
+      project: default
+      sources:
+        - repoURL: "{{repoURL}}"
+          targetRevision: "{{targetRevision}}"
+          helm:
+            valueFiles:
+              - "$values/components/{{component}}/values.yaml"
+            releaseName: "{{component}}"
+          chart: "{{chart}}"
+        - repoURL: "https://github.com/anandf/app-platform-argocd.git"
+          targetRevision: main
+          ref: values
+      destination:
+        name: in-cluster
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
