@@ -1,4 +1,6 @@
 installCRDs=true
 cert-manager:
   namespace: cert-manager
-
+  
+startupapicheck:
+  enabled: false
