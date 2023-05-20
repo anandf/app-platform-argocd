@@ -1,13 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
 
-image: # see: https://quay.io/repository/kiali/kiali-operator?tab=tags
-  repo: quay.io/kiali/kiali-operator
-  tag: v1.39.0
-  digest: "" # use "sha256" if tag is a sha256 hash (do NOT prefix this value with a "@")
-  pullPolicy: Always
-  pullSecrets: []
-
 # Deployment options for the operator pod.
 nodeSelector: {}
 podAnnotations: {}
