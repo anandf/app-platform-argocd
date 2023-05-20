@@ -15,7 +15,7 @@ spec:
         releaseName: istio
     - repoURL: https://github.com/anandf/app-platform-argocd
       targetRevision: main
-      path: components/istio/helm-values
+      path: components/istio
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
