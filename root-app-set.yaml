@@ -34,6 +34,9 @@ spec:
         - repoURL: "https://github.com/anandf/app-platform-argocd.git"
           targetRevision: main
           ref: values
+        - repoURL: "https://github.com/anandf/app-platform-argocd"
+          targetRevision: main
+          path: "components/{{component}}"
       destination:
         name: in-cluster
         namespace: "{{namespace}}"
