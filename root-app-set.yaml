@@ -76,12 +76,6 @@ spec:
             chartVersion: "1.3.7"
             chart: oam-runtime
             namespace: oam-system
-          - component: external-dns
-            repoURL: oci://registry-1.docker.io/bitnamicharts/external-dns
-            chartVersion: "2.20.0"
-            chart: external-dns
-            namespace: external-dns
-
   template:
     metadata:
       name: "{{component}}"
