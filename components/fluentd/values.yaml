@@ -1,26 +1,9 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# DaemonSet, Deployment or StatefulSet
-kind: "DaemonSet"
-
-# # Only applicable for Deployment or StatefulSet
-# replicaCount: 1
 
 image:
   tag: v1.16-debian-opensearch-1
-
-## Optional array of imagePullSecrets containing private registry credentials
-## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-imagePullSecrets: []
-
-serviceAccount:
-  create: true
-  annotations: {}
-  name: null
-
-rbac:
-  create: true
 
 fileConfigs:
   01_sources.conf: |-
