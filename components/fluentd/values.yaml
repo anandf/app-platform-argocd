@@ -3,3 +3,5 @@ image:
 env:
   - name: FLUENT_ELASTICSEARCH_HOST
     value: opensearch-cluster-master
+  - name: FLUENTD_CONF
+    value: /fluentd/etc/fluent.conf
