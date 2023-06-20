@@ -20,27 +20,27 @@ spec:
             repoURL: https://jaegertracing.github.io/helm-charts
             chartVersion: "2.43.0"
             chart: jaeger-operator
-            namespace: observability
+            namespace: o11y
           - component: opensearch
             repoURL: https://opensearch-project.github.io/helm-charts
             chartVersion: "1.20.0"
             chart: opensearch
-            namespace: observability
+            namespace: o11y
           - component: opensearch-dashboards
             repoURL: https://opensearch-project.github.io/helm-charts
             chartVersion: "1.13.0"
             chart: opensearch-dashboards
-            namespace: observability
+            namespace: o11y
           - component: kiali
             repoURL: https://kiali.org/helm-charts
             chartVersion: "1.30.0"
             chart: kiali-operator
-            namespace: observability
+            namespace: o11y
           - component: prometheus
             repoURL: https://prometheus-community.github.io/helm-charts
             chartVersion: "47.0.0"
             chart: kube-prometheus-stack
-            namespace: observability
+            namespace: o11y
           - component: keycloak
             repoURL: https://codecentric.github.io/helm-charts
             chartVersion: "18.4.3"
@@ -55,12 +55,12 @@ spec:
             repoURL: https://grafana.github.io/helm-charts
             chartVersion: "6.56.5"
             chart: grafana
-            namespace: observability
+            namespace: o11y
           - component: fluentd
             repoURL: registry-1.docker.io
             chartVersion: "5.8.2"
             chart: bitnamicharts/fluentd
-            namespace: observability
+            namespace: o11y
           - component: velero
             repoURL: https://vmware-tanzu.github.io/helm-charts
             chartVersion: "4.0.2"
@@ -70,7 +70,7 @@ spec:
             repoURL: https://charts.kubevela.net/core
             chartVersion: "1.8.2"
             chart: vela-core
-            namespace: oam-system
+            namespace: vela-system
   template:
     metadata:
       name: "{{component}}"
@@ -102,4 +102,3 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true

@@ -24,10 +24,11 @@ controllerArgs:
 OAMSpecVer: "v0.3"
 
 ## @param disableCaps Disable capability
-disableCaps: "all"
+disableCaps: "rollout"
 
 ## @param dependCheckWait dependCheckWait is the time to wait for ApplicationConfiguration's dependent-resource ready
 dependCheckWait: 30s
+
 
 ## @section KubeVela workflow parameters
 
@@ -43,6 +44,7 @@ workflow:
       failedState: 300
   step:
     errorRetryTimes: 10
+
 
 ## @section KubeVela controller parameters
 
@@ -156,7 +158,7 @@ multicluster:
     port: 9443
     image:
       repository: oamdev/cluster-gateway
-      tag: v1.9.0-alpha.2
+      tag: v1.8.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -171,6 +173,7 @@ multicluster:
         enabled: false
       certPath: /etc/k8s-cluster-gateway-certs
 
+
 ## @section Test parameters
 
 ## @param test.app.repository Test app repository
@@ -184,6 +187,7 @@ test:
   k8s:
     repository: oamdev/alpine-k8s
     tag: 1.18.2
+
 
 ## @section Common parameters
 
@@ -207,13 +211,11 @@ serviceAccount:
   name:
 
 ## @skip podSecurityContext
-podSecurityContext:
-  {}
+podSecurityContext: {}
   # fsGroup: 2000
 
 ## @skip securityContext
-securityContext:
-  {}
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -261,7 +263,7 @@ admissionWebhooks:
   appConversion:
     enabled: false
   certManager:
-    enabled: false
+    enabled: true
     revisionHistoryLimit: 3
 
 ## @param kubeClient.qps The qps for reconcile clients
