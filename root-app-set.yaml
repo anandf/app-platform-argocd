@@ -38,7 +38,7 @@ spec:
             namespace: observability
           - component: prometheus
             repoURL: https://prometheus-community.github.io/helm-charts
-            chartVersion: "35.0.3"
+            chartVersion: "47.0.0"
             chart: kube-prometheus-stack
             namespace: observability
           - component: keycloak
@@ -58,7 +58,7 @@ spec:
             namespace: observability
           - component: fluentd
             repoURL: https://fluent.github.io/helm-charts
-            chartVersion: "0.4.1"
+            chartVersion: "0.4.3"
             chart: fluentd
             namespace: observability
           - component: velero
