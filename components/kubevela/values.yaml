@@ -170,7 +170,7 @@ multicluster:
     secureTLS:
       enabled: true
       certManager:
-        enabled: false
+        enabled: true
       certPath: /etc/k8s-cluster-gateway-certs
 
 
