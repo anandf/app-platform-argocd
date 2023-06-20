@@ -1,3 +1,5 @@
+image:
+  tag: v1.16-debian-opensearch-1
 env:
   - name: FLUENT_ELASTICSEARCH_HOST
     value: opensearch-cluster-master
