@@ -57,9 +57,9 @@ spec:
             chart: grafana
             namespace: observability
           - component: fluentd
-            repoURL: https://fluent.github.io/helm-charts
-            chartVersion: "0.4.3"
-            chart: fluentd
+            repoURL: registry-1.docker.io
+            chartVersion: "5.8.2"
+            chart: bitnamicharts/fluentd
             namespace: observability
           - component: velero
             repoURL: https://vmware-tanzu.github.io/helm-charts
@@ -82,6 +82,7 @@ spec:
         - repoURL: "{{repoURL}}"
           targetRevision: "{{chartVersion}}"
           helm:
+            passCredentials: true
             valueFiles:
               - "$values/components/{{component}}/values.yaml"
             releaseName: "{{component}}"
@@ -101,3 +102,4 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true

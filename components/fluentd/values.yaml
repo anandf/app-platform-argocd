@@ -1,10 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
 
-
-image:
-  tag: v1.16-debian-opensearch-1
-
 fileConfigs:
   01_sources.conf: |-
     ## logs from podman
