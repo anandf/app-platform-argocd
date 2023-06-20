@@ -1,7 +1,135 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# DaemonSet, Deployment or StatefulSet
+kind: "DaemonSet"
+
+# # Only applicable for Deployment or StatefulSet
+# replicaCount: 1
+
 image:
   tag: v1.16-debian-opensearch-1
-env:
-  - name: FLUENT_ELASTICSEARCH_HOST
-    value: opensearch-cluster-master
-  - name: FLUENTD_CONF
-    value: /fluentd/etc/fluent.conf
+
+## Optional array of imagePullSecrets containing private registry credentials
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: null
+
+rbac:
+  create: true
+
+fileConfigs:
+  01_sources.conf: |-
+    ## logs from podman
+    <source>
+      @type tail
+      @id in_tail_container_logs
+      @label @KUBERNETES
+      path /var/log/containers/*.log
+      pos_file /var/log/fluentd-containers.log.pos
+      tag kubernetes.*
+      read_from_head true
+      <parse>
+        @type multi_format
+        <pattern>
+          format json
+          time_key time
+          time_type string
+          time_format "%Y-%m-%dT%H:%M:%S.%NZ"
+          keep_time_key false
+        </pattern>
+        <pattern>
+          format regexp
+          expression /^(?<time>.+) (?<stream>stdout|stderr)( (.))? (?<log>.*)$/
+          time_format '%Y-%m-%dT%H:%M:%S.%NZ'
+          keep_time_key false
+        </pattern>
+      </parse>
+      emit_unmatched_lines true
+    </source>
+
+  02_filters.conf: |-
+    <label @KUBERNETES>
+      <match kubernetes.var.log.containers.fluentd**>
+        @type relabel
+        @label @FLUENT_LOG
+      </match>
+
+      # <match kubernetes.var.log.containers.**_kube-system_**>
+      #   @type null
+      #   @id ignore_kube_system_logs
+      # </match>
+
+      <filter kubernetes.**>
+        @type kubernetes_metadata
+        @id filter_kube_metadata
+        skip_labels false
+        skip_container_metadata false
+        skip_namespace_metadata true
+        skip_master_url true
+      </filter>
+
+      <match **>
+        @type relabel
+        @label @DISPATCH
+      </match>
+    </label>
+
+  03_dispatch.conf: |-
+    <label @DISPATCH>
+      <filter **>
+        @type prometheus
+        <metric>
+          name fluentd_input_status_num_records_total
+          type counter
+          desc The total number of incoming records
+          <labels>
+            tag ${tag}
+            hostname ${hostname}
+          </labels>
+        </metric>
+      </filter>
+
+      <match **>
+        @type relabel
+        @label @OUTPUT
+      </match>
+    </label>
+
+04_outputs.conf: |-
+    <label @OUTPUT>
+      <match **>
+        @type opensearch
+        host "#{ENV['FLUENT_OPENSEARCH_HOST']}"
+        port 9200
+        path "#{ENV['FLUENT_OPENSEARCH_PATH']}"
+        scheme "#{ENV['FLUENT_OPENSEARCH_SCHEME'] || 'http'}"
+        ssl_verify "#{ENV['FLUENT_OPENSEARCH_SSL_VERIFY'] || 'true'}"
+        ssl_version "#{ENV['FLUENT_OPENSEARCH_SSL_VERSION'] || 'TLSv1_2'}"
+        ca_file "#{ENV['FLUENT_OPENSEARCH_CA_PATH']}"
+        user "#{ENV['FLUENT_OPENSEARCH_USER']}"
+        password "#{ENV['FLUENT_OPENSEARCH_PASSWORD']}"
+        client_cert "#{ENV['FLUENT_OPENSEARCH_CLIENT_CERT']}"
+        client_key "#{ENV['FLUENT_OPENSEARCH_CLIENT_KEY']}"
+        client_key_pass "#{ENV['FLUENT_OPENSEARCH_CLIENT_KEY_PASS']}"
+        index_name "#{ENV['FLUENT_OPENSEARCH_INDEX_NAME'] || 'fluentd'}"
+        logstash_dateformat "#{ENV['FLUENT_OPENSEARCH_LOGSTASH_DATEFORMAT'] || '%Y.%m.%d'}"
+        logstash_format "#{ENV['FLUENT_OPENSEARCH_LOGSTASH_FORMAT'] || 'false'}"
+        logstash_prefix "#{ENV['FLUENT_OPENSEARCH_LOGSTASH_PREFIX'] || 'logstash'}"
+        logstash_prefix_separator "#{ENV['FLUENT_OPENSEARCH_LOGSTASH_PREFIX_SEPARATOR'] || '-'}"
+        <buffer>
+          flush_thread_count "#{ENV['FLUENT_OPENSEARCH_BUFFER_FLUSH_THREAD_COUNT'] || '1'}"
+          flush_mode "#{ENV['FLUENT_OPENSEARCH_BUFFER_FLUSH_MODE'] || 'interval'}"
+          flush_interval "#{ENV['FLUENT_OPENSEARCH_BUFFER_FLUSH_INTERVAL'] || '60s'}"
+          chunk_limit_size "#{ENV['FLUENT_OPENSEARCH_BUFFER_CHUNK_LIMIT_SIZE'] || '8M'}"
+          total_limit_size "#{ENV['FLUENT_OPENSEARCH_BUFFER_TOTAL_LIMIT_SIZE'] || '512M'}"
+          retry_max_interval "#{ENV['FLUENT_OPENSEARCH_BUFFER_RETRY_MAX_INTERVAL'] || '30'}"
+          retry_timeout "#{ENV['FLUENT_OPENSEARCH_BUFFER_RETRY_TIMEOUT'] || '72h'}"
+          retry_forever "#{ENV['FLUENT_OPENSEARCH_BUFFER_RETRY_FOREVER'] || 'false'}"
+        </buffer>
+      </match>
+    </label>
