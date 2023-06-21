@@ -104,6 +104,7 @@ cr:
     deployment:
       accessible_namespaces:
         - "**"
+    istio_namespace: istio-system
     ingress:
       enabled: true
       # default: additional_labels is empty
