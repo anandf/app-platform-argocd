@@ -41,16 +41,7 @@ spec:
             chartVersion: "47.0.0"
             chart: kube-prometheus-stack
             namespace: o11y
-          - component: keycloak
-            repoURL: https://codecentric.github.io/helm-charts
-            chartVersion: "18.4.3"
-            chart: keycloak
-            namespace: security
-          - component: ingress-nginx
-            repoURL: https://kubernetes.github.io/ingress-nginx
-            chartVersion: "4.6.1"
-            chart: ingress-nginx
-            namespace: ingress-nginx
+            serverSideApply: true
           - component: grafana
             repoURL: https://grafana.github.io/helm-charts
             chartVersion: "6.56.5"
@@ -61,19 +52,30 @@ spec:
             chartVersion: "5.8.2"
             chart: bitnamicharts/fluentd
             namespace: o11y
-          - component: velero
-            repoURL: https://vmware-tanzu.github.io/helm-charts
-            chartVersion: "4.0.2"
-            chart: velero
-            namespace: velero
+          - component: keycloak
+            repoURL: https://codecentric.github.io/helm-charts
+            chartVersion: "18.4.3"
+            chart: keycloak
+            namespace: security
+          - component: ingress-nginx
+            repoURL: https://kubernetes.github.io/ingress-nginx
+            chartVersion: "4.6.1"
+            chart: ingress-nginx
+            namespace: ingress-nginx
           - component: kubevela
             repoURL: https://charts.kubevela.net/core
             chartVersion: "1.8.2"
             chart: vela-core
             namespace: vela-system
+          - component: velero
+            repoURL: https://vmware-tanzu.github.io/helm-charts
+            chartVersion: "4.0.2"
+            chart: velero
+            namespace: velero
+  goTemplate: true
   template:
     metadata:
-      name: "{{component}}"
+      name: "{{.component}}"
       annotations:
         argocd.argoproj.io/manifest-generate-paths: ".;.."
     spec:
@@ -90,28 +92,34 @@ spec:
           kind: Certificate
           jsonPointers:
             - /spec/duration
+        - group: apiregistration.k8s.io
+          kind: APIService
+          jsonPointers:
+            - /spec/insecureSkipTLSVerify
+            - /spec/caBundle
       project: default
       sources:
-        - repoURL: "{{repoURL}}"
-          targetRevision: "{{chartVersion}}"
+        - repoURL: "{{.repoURL}}"
+          targetRevision: "{{.chartVersion}}"
           helm:
             passCredentials: true
             valueFiles:
-              - "$values/components/{{component}}/values.yaml"
-            releaseName: "{{component}}"
-          chart: "{{chart}}"
+              - "$values/components/{{.component}}/values.yaml"
+            releaseName: "{{.component}}"
+          chart: "{{.chart}}"
         - repoURL: "https://github.com/anandf/app-platform-argocd.git"
           targetRevision: main
           ref: values
         - repoURL: "https://github.com/anandf/app-platform-argocd"
           targetRevision: main
-          path: "components/{{component}}"
+          path: "components/{{.component}}"
       destination:
         name: in-cluster
-        namespace: "{{namespace}}"
+        namespace: "{{.namespace}}"
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply={{or .serverSideApply false}}
