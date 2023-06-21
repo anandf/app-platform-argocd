@@ -24,17 +24,17 @@ spec:
           - component: istio-cni
             repoURL: https://istio-release.storage.googleapis.com/charts
             chartVersion: "1.18.0"
-            chart: istio-cni
+            chart: cni
             namespace: istio-system
           - component: istio-gateway
             repoURL: https://istio-release.storage.googleapis.com/charts
             chartVersion: "1.18.0"
-            chart: istio-gateway
+            chart: gateway
             namespace: istio-system
           - component: istio-ztunnel
             repoURL: https://istio-release.storage.googleapis.com/charts
             chartVersion: "1.18.0"
-            chart: istio-ztunnel
+            chart: ztunnel
             namespace: istio-system
           - component: jaeger
             repoURL: https://jaegertracing.github.io/helm-charts
