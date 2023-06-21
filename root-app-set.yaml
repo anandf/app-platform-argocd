@@ -88,6 +88,7 @@ spec:
           kind: ValidatingWebhookConfiguration
           jqPathExpressions:
             - '.webhooks[]?.clientConfig.caBundle'
+            - '.webhooks[]?.failurePolicy'
         - group: cert-manager.io
           kind: Certificate
           jsonPointers:
