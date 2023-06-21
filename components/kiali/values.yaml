@@ -102,3 +102,5 @@ cr:
     deployment:
       accessible_namespaces:
         - "**"
+    ingress:
+      enabled: true
