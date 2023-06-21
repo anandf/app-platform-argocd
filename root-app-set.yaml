@@ -59,7 +59,7 @@ spec:
             namespace: security
           - component: ingress-nginx
             repoURL: https://kubernetes.github.io/ingress-nginx
-            chartVersion: "4.6.1"
+            chartVersion: "4.7.0"
             chart: ingress-nginx
             namespace: ingress-nginx
           - component: kubevela
