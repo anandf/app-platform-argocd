@@ -16,26 +16,6 @@ spec:
             chartVersion: "1.18.0"
             chart: base
             namespace: istio-system
-          - component: istiod
-            repoURL: https://istio-release.storage.googleapis.com/charts
-            chartVersion: "1.18.0"
-            chart: istiod
-            namespace: istio-system
-          - component: istio-cni
-            repoURL: https://istio-release.storage.googleapis.com/charts
-            chartVersion: "1.18.0"
-            chart: cni
-            namespace: istio-system
-          - component: istio-gateway
-            repoURL: https://istio-release.storage.googleapis.com/charts
-            chartVersion: "1.18.0"
-            chart: gateway
-            namespace: istio-system
-          - component: istio-ztunnel
-            repoURL: https://istio-release.storage.googleapis.com/charts
-            chartVersion: "1.18.0"
-            chart: ztunnel
-            namespace: istio-system
           - component: jaeger
             repoURL: https://jaegertracing.github.io/helm-charts
             chartVersion: "2.43.0"
