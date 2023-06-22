@@ -33,7 +33,7 @@ spec:
             namespace: o11y
           - component: kiali
             repoURL: https://kiali.org/helm-charts
-            chartVersion: "1.30.0"
+            chartVersion: "1.69.0"
             chart: kiali-operator
             namespace: o11y
           - component: prometheus
