@@ -1,16 +1,4 @@
 ingress:
   enabled: true
-  labels: {}
   path: /grafana
-
-  # pathType is only for k8s >= 1.1=
   pathType: Prefix
-
-  hosts:
-    - '*'
-serviceMonitor:
-  enabled: true
-  path: /metrics
-  interval: 1m
-  scheme: http
-  scrapeTimeout: 30s
