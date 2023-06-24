@@ -105,6 +105,7 @@ cr:
     deployment:
       accessible_namespaces:
         - "**"
+      view_only_mode: false
       cluster_wide_access: true
       ingress:
         enabled: true
@@ -112,19 +113,5 @@ cr:
         class_name: "nginx"
         # default: override_yaml is undefined
         override_yaml:
-          metadata:
-            annotations:
-              nginx.ingress.kubernetes.io/secure-backends: "true"
-              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          spec:
-            rules:
-            - http:
-                paths:
-                - path: "/kiali"
-                  pathType: Prefix
-                  backend:
-                    service:
-                      name: "kiali"
-                      port:
-                        number: 20001  
+          metadata: {}
 
