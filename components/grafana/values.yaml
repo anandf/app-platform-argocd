@@ -1,0 +1,25 @@
+ingress:
+  enabled: true
+  labels: {}
+  path: /grafana
+
+  # pathType is only for k8s >= 1.1=
+  pathType: Prefix
+
+  hosts:
+    - *
+serviceMonitor:
+  ## If true, a ServiceMonitor CRD is created for a prometheus operator
+  ## https://github.com/coreos/prometheus-operator
+  ##
+  enabled: true
+  path: /metrics
+  #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
+  labels: {}
+  interval: 1m
+  scheme: http
+  tlsConfig: {}
+  scrapeTimeout: 30s
+  relabelings: []
+  targetLabels: []
+
