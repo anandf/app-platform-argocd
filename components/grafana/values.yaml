@@ -9,12 +9,8 @@ ingress:
   hosts:
     - '*'
 serviceMonitor:
-  ## If true, a ServiceMonitor CRD is created for a prometheus operator
-  ## https://github.com/coreos/prometheus-operator
-  ##
   enabled: true
   path: /metrics
-  #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
   labels: {}
   interval: 1m
   scheme: http
