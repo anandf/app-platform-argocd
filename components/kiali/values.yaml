@@ -105,7 +105,6 @@ cr:
     deployment:
       accessible_namespaces:
         - "**"
-      view_only_mode: false
       cluster_wide_access: true
       ingress:
         enabled: true
