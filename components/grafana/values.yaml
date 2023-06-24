@@ -11,11 +11,6 @@ ingress:
 serviceMonitor:
   enabled: true
   path: /metrics
-  labels: {}
   interval: 1m
   scheme: http
-  tlsConfig: {}
   scrapeTimeout: 30s
-  relabelings: []
-  targetLabels: []
-
