@@ -102,6 +102,36 @@ cr:
     auth:
       strategy: anonymous
     istio_namespace: istio-system
+    external_services:
+      tracing:
+        # Enabled by default. Kiali will anyway fallback to disabled if
+        # Jaeger is unreachable.
+        enabled: true
+        # Jaeger service name is "tracing" and is in the "telemetry" namespace.
+        # Make sure the URL you provide corresponds to the non-GRPC enabled endpoint
+        # if you set "use_grpc" to false.
+        in_cluster_url: 'http://jaeger-jaeger-operator-jaeger-query.o11y:16685/jaeger'
+        use_grpc: true
+      prometheus:
+        # Prometheus service name is "metrics" and is in the "telemetry" namespace
+        url: "http://prometheus-operated.o11y:9090/"
+      grafana:
+        enabled: true
+        # Grafana service name is "grafana" and is in the "telemetry" namespace.
+        in_cluster_url: 'http://grafana.o11y:3000/'
+        dashboards:
+        - name: "Istio Service Dashboard"
+          variables:
+            namespace: "var-namespace"
+            service: "var-service"
+        - name: "Istio Workload Dashboard"
+          variables:
+            namespace: "var-namespace"
+            workload: "var-workload"
+        - name: "Istio Mesh Dashboard"
+        - name: "Istio Control Plane Dashboard"
+        - name: "Istio Performance Dashboard"
+        - name: "Istio Wasm Extension Dashboard"
     deployment:
       accessible_namespaces:
         - "**"
