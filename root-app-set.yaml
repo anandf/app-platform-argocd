@@ -18,7 +18,7 @@ spec:
             namespace: istio-system
           - component: jaeger
             repoURL: https://jaegertracing.github.io/helm-charts
-            chartVersion: "2.43.0"
+            chartVersion: "2.45.0"
             chart: jaeger-operator
             namespace: o11y
           - component: opensearch

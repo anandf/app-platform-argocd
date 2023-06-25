@@ -36,4 +36,4 @@ kubectl patch cm argocd-cm -n argocd -p '{"data": { "resource.customizations": "
 
 kubectl port-forward -n argocd svc/argocd-server 8443:443 > /dev/null 2>&1 &
 
-kubectl apply -f ../root-app-set.yaml
+kubectl apply -f ../root-app-set.yaml -n argocd
