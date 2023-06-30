@@ -144,5 +144,16 @@ cr:
         - kiali.172.18.255.200.nip.io
         # default: override_yaml is undefined
         override_yaml:
-          metadata: {}
+          spec:
+            rules:
+            - host: kiali.172.18.255.200.nip.io
+              http:
+                paths:
+                - path: "/kiali"
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: "kiali"
+                      port:
+                        number: 20001
 
