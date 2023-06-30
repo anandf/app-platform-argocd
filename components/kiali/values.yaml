@@ -140,6 +140,8 @@ cr:
         enabled: true
         # default: additional_labels is empty
         class_name: "nginx"
+        hosts:
+        - kiali.172.18.255.200.nip.io
         # default: override_yaml is undefined
         override_yaml:
           metadata: {}
