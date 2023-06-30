@@ -2,3 +2,5 @@ ingress:
   enabled: true
   path: /grafana
   pathType: Prefix
+  hosts:
+  - grafana.172.18.255.200.nip.io

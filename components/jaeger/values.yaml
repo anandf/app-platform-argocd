@@ -42,7 +42,7 @@ jaeger:
       enabled: true
       ingressClassName: nginx
       hosts:
-      - tracing.local
+      - tracing.172.18.255.200.nip.io
       pathType: Prefix
 rbac:
   # Specifies whether RBAC resources should be created
