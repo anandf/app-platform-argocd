@@ -41,7 +41,13 @@ jaeger:
     ingress:
       enabled: true
       ingressClassName: nginx
-
+      hosts:
+      - tracing.local
+    strategy: allInOne
+    allInOne:
+    options:
+      query:
+        base-path: /jaeger
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
