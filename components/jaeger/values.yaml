@@ -38,6 +38,11 @@ jaeger:
   # namespace where Jaeger resource should be created default to .Release.Namespace
   namespace:
   spec:
+    strategy: allinone
+    allInOne:
+      options:
+        query:
+          basePath: '/jaeger'
     ingress:
       enabled: true
       ingressClassName: nginx
