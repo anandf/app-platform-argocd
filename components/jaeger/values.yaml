@@ -44,10 +44,6 @@ jaeger:
       hosts:
       - tracing.local
       pathType: Prefix
-    allInOne:
-      options:
-        query:
-          base-path: /jaeger
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
@@ -108,3 +104,7 @@ priorityClassName:
 hostNetwork: false
 
 metricsPort: 8383
+
+query:
+  enabled: true
+  basePath: /jaeger
