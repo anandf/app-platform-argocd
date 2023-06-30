@@ -46,9 +46,9 @@ jaeger:
       pathType: Prefix
     strategy: allInOne
     allInOne:
-    options:
-      query:
-        base-path: /jaeger
+      options:
+        query:
+          base-path: /jaeger
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
