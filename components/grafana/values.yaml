@@ -5,3 +5,7 @@ ingress:
   hosts:
   - grafana.172.18.255.200.nip.io
   ingressClassName: nginx
+
+grafana.ini:
+  security:
+    disable_initial_admin_creation: true
