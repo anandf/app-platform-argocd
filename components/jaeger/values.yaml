@@ -44,7 +44,6 @@ jaeger:
       hosts:
       - tracing.local
       pathType: Prefix
-    strategy: allInOne
     allInOne:
       options:
         query:
