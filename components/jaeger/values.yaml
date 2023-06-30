@@ -43,6 +43,7 @@ jaeger:
       ingressClassName: nginx
       hosts:
       - tracing.local
+      pathType: Prefix
     strategy: allInOne
     allInOne:
     options:
