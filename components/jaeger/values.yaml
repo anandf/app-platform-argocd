@@ -104,7 +104,3 @@ priorityClassName:
 hostNetwork: false
 
 metricsPort: 8383
-
-query:
-  enabled: true
-  basePath: /jaeger
