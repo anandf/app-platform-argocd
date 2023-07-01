@@ -19,5 +19,6 @@ spec:
           properties:
             domain: testsvc.172.18.255.200.nip.io
             class: nginx
+            classInSpec: true
             http:
               "/": 8000
