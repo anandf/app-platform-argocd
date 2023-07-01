@@ -63,9 +63,9 @@ spec:
             chart: ingress-nginx
             namespace: ingress-nginx
           - component: kubevela
-            repoURL: https://charts.kubevela.net/core
+            repoURL: registry-1.docker.io
             chartVersion: "1.8.2"
-            chart: vela-core
+            chart: eanajose/vela-core
             namespace: vela-system
           - component: velero
             repoURL: https://vmware-tanzu.github.io/helm-charts

@@ -14,13 +14,13 @@ kubectl wait --namespace metallb-system \
                 --selector=app=metallb \
                 --timeout=90s
 
-PODMAN_CIDR=$(podman network inspect -f '{{range .Subnets}}{{if eq (len .Subnet.IP) 4}}{{.Subnet}}{{end}}{{end}}' kind)
-IP_ADDR_PREFIX=$(echo ${PODMAN_CIDR} | cut -f1,2,3 -d.)
-IP_ADDR_RANGE=$(echo "${IP_ADDR_PREFIX}.200-${IP_ADDR_PREFIX}.250")
+#PODMAN_CIDR=$(podman network inspect -f '{{range .Subnets}}{{if eq (len .Subnet.IP) 4}}{{.Subnet}}{{end}}{{end}}' kind)
+#IP_ADDR_PREFIX=$(echo ${PODMAN_CIDR} | cut -f1,2,3 -d.)
+#P_ADDR_RANGE=$(echo "${IP_ADDR_PREFIX}.200-${IP_ADDR_PREFIX}.250")
 
-DOCKER_CIDR=$(docker network inspect -f '{{.IPAM.Config}}' kind)
-IP_ADDR_PREFIX=$(echo ${DOCKER_CIDR} | cut -f1,2 -d.)
-#IP_ADDR_RANGE=$(echo "${IP_ADDR_PREFIX}.255.200-${IP_ADDR_PREFIX}.255.250")
+#DOCKER_CIDR=$(docker network inspect -f '{{.IPAM.Config}}' kind)
+#IP_ADDR_PREFIX=$(echo ${DOCKER_CIDR} | cut -f1,2 -d.)
+##IP_ADDR_RANGE=$(echo "${IP_ADDR_PREFIX}.255.200-${IP_ADDR_PREFIX}.255.250")
 IP_ADDR_RANGE="172.18.255.200-172.18.255.250"
 
 
