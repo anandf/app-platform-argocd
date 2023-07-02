@@ -47,6 +47,7 @@ deployment:
     enabled: true
     override_yaml:
       spec:
+        ingressClassName: nginx
         rules:
           - host: kiali.172.18.255.200.nip.io
             http:
