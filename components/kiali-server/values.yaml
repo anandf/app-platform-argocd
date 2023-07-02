@@ -23,7 +23,7 @@ istio_namespace: "istio-system" # default is where Kiali is installed
 auth:
   openid: {}
   openshift: {}
-  strategy: ""
+  strategy: anonymous
 
 deployment:
   # This only limits what Kiali will attempt to see, but Kiali Service Account has permissions to see everything.
@@ -46,7 +46,18 @@ deployment:
     class_name: "nginx"
     enabled: true
     override_yaml:
-      metadata: {}
+      spec:
+        rules:
+          - host: kiali.172.18.255.200.nip.io
+            http:
+              paths:
+                - path: "/kiali"
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: "kiali"
+                      port:
+                        number: 20001
   instance_name: "kiali"
   logger:
     log_format: "text"
