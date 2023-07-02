@@ -31,12 +31,12 @@ spec:
             chartVersion: "1.13.0"
             chart: opensearch-dashboards
             namespace: o11y
-          - component: kiali
+          - component: kiali-operator
             repoURL: https://kiali.org/helm-charts
             chartVersion: "1.70.0"
             chart: kiali-operator
             namespace: o11y
-          - component: kiali
+          - component: kiali-server
             repoURL: https://kiali.org/helm-charts
             chartVersion: "1.70.0"
             chart: kiali-server
