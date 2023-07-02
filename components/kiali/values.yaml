@@ -44,7 +44,7 @@ clusterRoleCreator: true
 # If you set this to an empty list, the operator will not be given permission to read any additional secrets
 # found in the cluster, and thus will only support a value of "false" in the Kiali CR setting
 # spec.kiali_feature_flags.certificates_information_indicators.enabled.
-secretReader: ["cacerts", "istio-ca-secret"]
+secretReader: ['cacerts', 'istio-ca-secret']
 
 # Set to true if you want to allow the operator to only be able to install Kiali in view-only-mode.
 # The purpose for this setting is to allow you to restrict the permissions given to the operator itself.
@@ -88,7 +88,7 @@ accessibleNamespacesLabel: ""
 # For what a Kiali CR spec can look like, see:
 # https://github.com/kiali/kiali-operator/blob/master/deploy/kiali/kiali_cr.yaml
 cr:
-  create: create
+  create: false
   name: kiali
   # If you elect to create a Kiali CR (--set cr.create=true)
   # and the operator is watching all namespaces (--set watchNamespace="")
@@ -99,61 +99,6 @@ cr:
   annotations: {}
 
   spec:
-    auth:
-      strategy: anonymous
-    istio_namespace: istio-system
-    external_services:
-      tracing:
-        # Enabled by default. Kiali will anyway fallback to disabled if
-        # Jaeger is unreachable.
-        enabled: true
-        # Jaeger service name is "tracing" and is in the "telemetry" namespace.
-        # Make sure the URL you provide corresponds to the non-GRPC enabled endpoint
-        # if you set "use_grpc" to false.
-        in_cluster_url: 'http://jaeger-jaeger-operator-jaeger-query.o11y:16685/jaeger'
-        use_grpc: true
-      prometheus:
-        # Prometheus service name is "metrics" and is in the "telemetry" namespace
-        url: "http://prometheus-operated.o11y:9090/"
-      grafana:
-        enabled: true
-        # Grafana service name is "grafana" and is in the "telemetry" namespace.
-        in_cluster_url: 'http://grafana.o11y:3000/'
-        dashboards:
-        - name: "Istio Service Dashboard"
-          variables:
-            namespace: "var-namespace"
-            service: "var-service"
-        - name: "Istio Workload Dashboard"
-          variables:
-            namespace: "var-namespace"
-            workload: "var-workload"
-        - name: "Istio Mesh Dashboard"
-        - name: "Istio Control Plane Dashboard"
-        - name: "Istio Performance Dashboard"
-        - name: "Istio Wasm Extension Dashboard"
     deployment:
       accessible_namespaces:
-        - "**"
-      cluster_wide_access: true
-      ingress:
-        enabled: true
-        # default: additional_labels is empty
-        class_name: "nginx"
-        hosts:
-        - kiali.172.18.255.200.nip.io
-        # default: override_yaml is undefined
-        override_yaml:
-          spec:
-            rules:
-            - host: kiali.172.18.255.200.nip.io
-              http:
-                paths:
-                - path: "/kiali"
-                  pathType: Prefix
-                  backend:
-                    service:
-                      name: "kiali"
-                      port:
-                        number: 20001
-
+      - '**'
