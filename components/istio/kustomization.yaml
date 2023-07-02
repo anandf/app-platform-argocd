@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - istio-operator.yaml
   - istio-cr.yaml
+  - istio-peerauthentication.yaml
