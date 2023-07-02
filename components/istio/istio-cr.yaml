@@ -121,7 +121,7 @@ spec:
           address: jaeger-operator-jaeger-collector.o11y.svc.cluster.local.:9411
     enablePrometheusMerge: true
   profile: default
-  tag: 1.15.3
+  tag: 1.18.0
   values:
     base:
       enableCRDTemplates: false
@@ -161,7 +161,7 @@ spec:
       defaultResources:
         requests:
           cpu: 10m
-      hub: istio/proxyv2:1.18.0
+      hub: docker.io/istio
       imagePullPolicy: IfNotPresent
       imagePullSecrets: []
       istioNamespace: istio-system
@@ -220,7 +220,7 @@ spec:
           aud: istio-ca
       sts:
         servicePort: 0
-      tag: 1.15.3-20230209181608-900a5c7b
+      tag: 1.18.0
       tracer:
         datadog: {}
         lightstep: {}
