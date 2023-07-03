@@ -84,12 +84,6 @@ deployment:
   view_only_mode: false
 
 external_services:
-  custom_dashboards:
-    enabled: true
-  istio:
-    root_namespace: ""
-
-external_services:
     custom_dashboards:
       discovery_auto_threshold: 10
       discovery_enabled: "auto"
@@ -143,7 +137,7 @@ external_services:
       enabled: true
       health_check_url: ""
       # default: in_cluster_url is undefined
-    in_cluster_url: "grafana.o11y.svc.cluster.local.:80"
+      in_cluster_url: "grafana.o11y.svc.cluster.local.:80"
       is_core: false
       url: ""
     istio:
@@ -201,7 +195,7 @@ external_services:
         enabled: false
         retention_period: "7d"
         scrape_interval: "30s"
-      url: ""
+      url: "http://prometheus.o11y.svc.cluster.local.:9090"
     tracing:
       auth:
         ca_file: ""
@@ -215,10 +209,6 @@ external_services:
       in_cluster_url: "jaeger-jaeger-operator-jaeger-query.o11y.svc.cluster.local.:16686"
       is_core: false
       namespace_selector: true
-      # default: query_scope is empty
-      query_scope:
-        mesh_id: "mesh-1"
-        cluster: "cluster-east"
       query_timeout: 5
       url: ""
       use_grpc: true
