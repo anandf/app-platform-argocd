@@ -108,7 +108,7 @@ external_services:
           enabled: false
           retention_period: "7d"
           scrape_interval: "30s"
-        url: "http://prometheus-operated.o11y:9090"
+        url: "http://prometheus-kube-prometheus-prometheus.o11y:9090"
     grafana:
       auth:
         ca_file: ""
@@ -136,7 +136,7 @@ external_services:
       # default: in_cluster_url is undefined
       in_cluster_url: "http://grafana.o11y:80"
       is_core: false
-      url: ""
+      url: "http://grafana.172.18.255.200"
     istio:
       component_status:
         components:
@@ -192,7 +192,7 @@ external_services:
         enabled: false
         retention_period: "7d"
         scrape_interval: "30s"
-      url: "http://prometheus-operated.o11y:9090"
+      url: "http://prometheus-kube-prometheus-prometheus.o11y:9090"
     tracing:
       auth:
         ca_file: ""
