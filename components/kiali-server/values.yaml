@@ -93,7 +93,7 @@ external_services:
       prometheus:
         auth:
           ca_file: ""
-          insecure_skip_verify: false
+          insecure_skip_verify: true
           password: ""
           token: ""
           type: "none"
@@ -102,20 +102,17 @@ external_services:
         cache_duration: 10
         cache_enabled: true
         cache_expiration: 300
-        # default: custom_headers is empty
-        custom_headers:
-          customHeader1: "customHeader1Value"
         health_check_url: ""
         is_core: true
         thanos_proxy:
           enabled: false
           retention_period: "7d"
           scrape_interval: "30s"
-        url: "http://prometheus.o11y.svc.cluster.local.:9090"
+        url: "http://prometheus-operated.o11y:9090"
     grafana:
       auth:
         ca_file: ""
-        insecure_skip_verify: false
+        insecure_skip_verify: true
         password: ""
         token: ""
         type: "none"
@@ -137,7 +134,7 @@ external_services:
       enabled: true
       health_check_url: ""
       # default: in_cluster_url is undefined
-      in_cluster_url: "grafana.o11y.svc.cluster.local.:80"
+      in_cluster_url: "http://grafana.o11y:80"
       is_core: false
       url: ""
     istio:
@@ -177,7 +174,7 @@ external_services:
     prometheus:
       auth:
         ca_file: ""
-        insecure_skip_verify: false
+        insecure_skip_verify: true
         password: ""
         token: ""
         type: "none"
@@ -195,18 +192,18 @@ external_services:
         enabled: false
         retention_period: "7d"
         scrape_interval: "30s"
-      url: "http://prometheus.o11y.svc.cluster.local.:9090"
+      url: "http://prometheus-operated.o11y:9090"
     tracing:
       auth:
         ca_file: ""
-        insecure_skip_verify: false
+        insecure_skip_verify: true
         password: ""
         token: ""
         type: "none"
         use_kiali_token: false
         username: ""
       enabled: true
-      in_cluster_url: "jaeger-jaeger-operator-jaeger-query.o11y.svc.cluster.local.:16686"
+      in_cluster_url: "http://jaeger-jaeger-operator-jaeger-query.o11y:16686"
       is_core: false
       namespace_selector: true
       query_timeout: 5
