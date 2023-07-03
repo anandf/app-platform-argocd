@@ -89,6 +89,141 @@ external_services:
   istio:
     root_namespace: ""
 
+external_services:
+    custom_dashboards:
+      discovery_auto_threshold: 10
+      discovery_enabled: "auto"
+      enabled: true
+      is_core: false
+      namespace_label: "namespace"
+      prometheus:
+        auth:
+          ca_file: ""
+          insecure_skip_verify: false
+          password: ""
+          token: ""
+          type: "none"
+          use_kiali_token: false
+          username: ""
+        cache_duration: 10
+        cache_enabled: true
+        cache_expiration: 300
+        # default: custom_headers is empty
+        custom_headers:
+          customHeader1: "customHeader1Value"
+        health_check_url: ""
+        is_core: true
+        thanos_proxy:
+          enabled: false
+          retention_period: "7d"
+          scrape_interval: "30s"
+        url: "http://prometheus.o11y.svc.cluster.local.:9090"
+    grafana:
+      auth:
+        ca_file: ""
+        insecure_skip_verify: false
+        password: ""
+        token: ""
+        type: "none"
+        use_kiali_token: false
+        username: ""
+      dashboards:
+      - name: "Istio Service Dashboard"
+        variables:
+          namespace: "var-namespace"
+          service: "var-service"
+      - name: "Istio Workload Dashboard"
+        variables:
+          namespace: "var-namespace"
+          workload: "var-workload"
+      - name: "Istio Mesh Dashboard"
+      - name: "Istio Control Plane Dashboard"
+      - name: "Istio Performance Dashboard"
+      - name: "Istio Wasm Extension Dashboard"
+      enabled: true
+      health_check_url: ""
+      # default: in_cluster_url is undefined
+    in_cluster_url: "grafana.o11y.svc.cluster.local.:80"
+      is_core: false
+      url: ""
+    istio:
+      component_status:
+        components:
+        - app_label: "istiod"
+          is_core: true
+          is_proxy: false
+          namespace: istio-system
+        - app_label: "istio-ingressgateway"
+          is_core: true
+          is_proxy: true
+          # default: namespace is undefined
+          namespace: istio-system
+        - app_label: "istio-egressgateway"
+          is_core: false
+          is_proxy: true
+          # default: namespace is undefined
+          namespace: istio-system
+        enabled: true
+      config_map_name: "istio"
+      envoy_admin_local_port: 15000
+      gateway_api_class_name: ""
+      istio_api_enabled: true
+      # default: istio_canary_revision is undefined
+      istio_canary_revision:
+        current: "1-9-9"
+        upgrade: "1-10-2"
+      istio_identity_domain: "svc.cluster.local"
+      istio_injection_annotation: "sidecar.istio.io/inject"
+      istio_sidecar_annotation: "sidecar.istio.io/status"
+      istio_sidecar_injector_config_map_name: "istio-sidecar-injector"
+      istiod_deployment_name: "istiod"
+      istiod_pod_monitoring_port: 15014
+      root_namespace: "istio-system"
+      url_service_version: ""
+    prometheus:
+      auth:
+        ca_file: ""
+        insecure_skip_verify: false
+        password: ""
+        token: ""
+        type: "none"
+        use_kiali_token: false
+        username: ""
+      cache_duration: 10
+      cache_enabled: true
+      cache_expiration: 300
+      # default: custom_headers is empty
+      custom_headers:
+        customHeader1: "customHeader1Value"
+      health_check_url: ""
+      is_core: true
+      thanos_proxy:
+        enabled: false
+        retention_period: "7d"
+        scrape_interval: "30s"
+      url: ""
+    tracing:
+      auth:
+        ca_file: ""
+        insecure_skip_verify: false
+        password: ""
+        token: ""
+        type: "none"
+        use_kiali_token: false
+        username: ""
+      enabled: true
+      in_cluster_url: "jaeger-jaeger-operator-jaeger-query.o11y.svc.cluster.local.:16686"
+      is_core: false
+      namespace_selector: true
+      # default: query_scope is empty
+      query_scope:
+        mesh_id: "mesh-1"
+        cluster: "cluster-east"
+      query_timeout: 5
+      url: ""
+      use_grpc: true
+      whitelist_istio_system: ["jaeger-query", "istio-ingressgateway"]
+
 identity: {}
   #cert_file:
   #private_key_file:
