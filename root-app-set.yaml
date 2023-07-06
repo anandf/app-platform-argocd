@@ -77,6 +77,11 @@ spec:
             chartVersion: "4.0.2"
             chart: velero
             namespace: velero
+          - component: harbor
+            repoURL: https://helm.goharbor.io
+            chartVersion: "1.12.2"
+            chart: harbor
+            namespace: harbor
   goTemplate: true
   template:
     metadata:
